@@ -337,3 +337,8 @@ footer{border-top:2px solid var(--surface2);padding:2rem 0 2.5rem;color:var(--mu
 @keyframes puff{to{translate:-24px -10px;scale:2.2;opacity:0}}
 
 @media (prefers-reduced-motion: reduce){.rv{opacity:1;translate:none}}
+
+/* hero fixes: bigger photo, keep name + cursor on one line */
+.hero .polaroid{width:100%;max-width:380px}
+.hero h1{white-space:nowrap}
+@media (max-width:820px){.hero .polaroid{max-width:320px;justify-self:start}}
