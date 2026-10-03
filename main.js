@@ -13,10 +13,10 @@ document.querySelectorAll('[data-art]').forEach(s=>draw(s,ART[s.dataset.art]));
 
 /* ---------- flip cards (swap in real photos later) ---------- */
 const SNAPS=[
- {img:'images/shellhacks.jpg',t:'shellhacks!',b:'ShellHacks 2026',d:'My SideQuest team and me at ShellHacks.'},
- {img:'images/cyberlaunch.jpg',t:'1st place!!',b:'CyberLaunch 2025',d:'My team getting our prize for 1st place in the Advanced division.'},
- {img:'images/demo-day.jpg',t:'demo day',b:'America on Tech',d:'My team at Demo Day. We placed 4th!'},
- {img:'images/ucf.jpg',t:'fave walk',b:'UCF',d:'My favorite spot to walk by on campus, behind L3Harris.'}
+ {img:'shellhacks.jpg',t:'shellhacks!',b:'ShellHacks 2026',d:'My SideQuest team and me at ShellHacks.'},
+ {img:'cyberlaunch.jpg',t:'1st place!!',b:'CyberLaunch 2025',d:'My team getting our prize for 1st place in the Advanced division.'},
+ {img:'demo-day.jpg',t:'demo day',b:'America on Tech',d:'My team at Demo Day. We placed 4th!'},
+ {img:'ucf.jpg',t:'fave walk',b:'UCF',d:'My favorite spot to walk by on campus, behind L3Harris.'}
 ];
 document.getElementById('flips').innerHTML=SNAPS.map(s=>`
  <button class="flip" aria-pressed="false" aria-label="${s.b}, flip for details">
@@ -28,7 +28,7 @@ document.getElementById('flips').innerHTML=SNAPS.map(s=>`
 document.querySelectorAll('.flip').forEach(f=>f.addEventListener('click',()=>f.setAttribute('aria-pressed',f.getAttribute('aria-pressed')!=='true')));
 
 /* ---------- photos ----------
-   Any element with data-img="images/whatever.jpg" shows that image once the file exists.
+   Any element with data-img="whatever.jpg" shows that image once the file exists.
    Until then it keeps the striped placeholder, so you can add photos one at a time. */
 document.querySelectorAll('[data-img]').forEach(el=>{
   const img=new Image();
