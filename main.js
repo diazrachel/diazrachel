@@ -48,9 +48,10 @@ function route(){
   document.title=titles[path];
   linksEl.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');
   if(!first){window.scrollTo(0,0);lapCar.classList.remove('go');void lapCar.offsetWidth;lapCar.classList.add('go');}
+  if(window.__onRoute)window.__onRoute(path,first);
   first=false;
 }
-addEventListener('hashchange',route);route();
+addEventListener('hashchange',()=>window.__go?window.__go():route());route();
 menuBtn.addEventListener('click',()=>{const o=linksEl.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o);});
 
 /* ---------- theme ---------- */
@@ -77,3 +78,81 @@ function press(){
 }
 rb.addEventListener('pointerdown',e=>{e.preventDefault();press();});
 rb.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();press();}});
+
+/* =========================================================
+   PZAZZ: animations & on-screen effects
+   ========================================================= */
+(function(){
+  const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* pixel wipe between pages */
+  const wipe=document.createElement('div');wipe.className='wipe';wipe.setAttribute('aria-hidden','true');
+  wipe.innerHTML=Array.from({length:8},(_,i)=>`<i style="--i:${i}"></i>`).join('');
+  document.body.appendChild(wipe);
+  let busy=false;
+  window.__go=()=>{
+    if(calm){route();return;}
+    if(busy)return; busy=true;
+    wipe.className='wipe in';
+    setTimeout(()=>{route();wipe.className='wipe out';setTimeout(()=>{wipe.className='wipe';busy=false;},320);},300);
+  };
+
+  /* staggered reveal of things on each page */
+  const SEL='h2,.frame,.polaroid,.xp,.flip,.currently,.win,.skill-row,.next,.sig';
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target;el.classList.add('in');io.unobserve(el);
+    /* once revealed, hand control back to the normal hover transitions */
+    setTimeout(()=>{el.classList.remove('rv','in');el.style.removeProperty('--d');},700+(parseInt(el.style.getPropertyValue('--d'))||0));}}),{threshold:.12});
+  function reveal(page){
+    if(calm)return;
+    let n=0;
+    page.querySelectorAll(SEL).forEach(el=>{
+      if(el.parentElement.closest('.rv-skip'))return;
+      if(el.closest('.flip-in'))return;
+      el.classList.remove('in');el.classList.add('rv');
+      el.style.setProperty('--d',Math.min(n++,8)*70+'ms');
+      io.observe(el);
+    });
+  }
+  window.__onRoute=(path)=>reveal(document.querySelector(`.page[data-page="${path}"]`));
+  reveal(document.querySelector('.page.on'));
+
+  /* typewriter on the big name */
+  const h=document.querySelector('.hero h1');
+  if(h&&!calm){
+    const text=h.textContent;h.setAttribute('aria-label',text);
+    h.innerHTML='<span aria-hidden="true"></span><span class="caret" aria-hidden="true"></span>';
+    const out=h.firstChild,caret=h.lastChild;let i=0;
+    setTimeout(function type(){out.textContent=text.slice(0,++i);
+      if(i<text.length)setTimeout(type,70+Math.random()*60);else caret.classList.add('done');},350);
+  }
+
+  /* click sparkles */
+  const COLORS=['#00D2BE','#FF8FB1','#FFCF4A','#C8CDD3'];
+  function burst(x,y,count,cls,spread,fall){
+    for(let k=0;k<count;k++){
+      const d=document.createElement('i');d.className=cls;
+      const a=Math.random()*Math.PI*2,r=spread*(.5+Math.random()*.6);
+      d.style.left=x+'px';d.style.top=y+'px';d.style.background=COLORS[k%COLORS.length];
+      d.style.setProperty('--x',Math.cos(a)*r+'px');
+      d.style.setProperty('--y',Math.sin(a)*r+(fall||0)+'px');
+      d.style.setProperty('--r',(Math.random()*720-360)+'deg');
+      document.body.appendChild(d);setTimeout(()=>d.remove(),1500);
+    }
+  }
+  if(!calm)addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;burst(e.clientX-3,e.clientY-3,7,'spark',34);});
+
+  /* confetti when you set a new best on lights out */
+  const best=document.getElementById('bestT'),btn=document.getElementById('reactBtn');
+  if(best&&btn&&!calm){let last=best.textContent;
+    new MutationObserver(()=>{if(best.textContent!==last){last=best.textContent;const b=btn.getBoundingClientRect();burst(b.left+b.width/2,b.top,36,'confetti',160,120);}}).observe(best,{childList:true});}
+
+  /* exhaust puffs behind the cruising car */
+  const track=document.querySelector('.track'),car=track&&track.querySelector('svg');
+  if(track&&car&&!calm)setInterval(()=>{
+    if(!document.querySelector('.page[data-page="/"]').classList.contains('on'))return;
+    const tr=track.getBoundingClientRect(),cr=car.getBoundingClientRect();
+    if(cr.right<tr.left||cr.left>tr.right)return;
+    const p=document.createElement('span');p.className='puff';p.style.left=(cr.left-tr.left-4)+'px';
+    track.appendChild(p);setTimeout(()=>p.remove(),950);
+  },180);
+})();

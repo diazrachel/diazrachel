@@ -257,3 +257,83 @@ footer{border-top:2px solid var(--surface2);padding:2rem 0 2.5rem;color:var(--mu
 .has-img .note{display:none}
 
 /* placeholder underline: delete this rule's contents (or the .ph classes) once everything is filled in */
+
+/* =========================================================
+   PZAZZ: animations & on-screen effects
+   ========================================================= */
+
+/* scroll / page reveal (only applied when JS adds .rv) */
+.page .rv{opacity:0;translate:0 18px;transition:opacity .45s ease-out,translate .45s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0ms)}
+.page .rv.in{opacity:1;translate:0 0}
+
+/* pixel wipe between pages */
+.wipe{position:fixed;inset:0;z-index:25;pointer-events:none;display:flex}
+.wipe i{flex:1;background:var(--teal);transform:scaleY(0);transform-origin:top}
+.wipe i:nth-child(even){background:var(--teal-deep)}
+.wipe.in i{animation:wipeIn .18s steps(4) forwards;animation-delay:calc(var(--i) * 15ms)}
+.wipe.out i{transform:scaleY(1);transform-origin:bottom;animation:wipeOut .18s steps(4) forwards;animation-delay:calc(var(--i) * 15ms)}
+@keyframes wipeIn{to{transform:scaleY(1)}}
+@keyframes wipeOut{to{transform:scaleY(0)}}
+
+/* typewriter name */
+.caret{display:inline-block;width:.5em;height:.85em;background:var(--teal);margin-left:.08em;vertical-align:-.05em;animation:caret 1s steps(1) infinite}
+.caret.done{animation:caret 1s steps(1) 3 forwards}
+@keyframes caret{50%{opacity:0}}
+
+/* "hi!!" waves every few seconds */
+.hi{animation:wave 4s ease-in-out infinite}
+@keyframes wave{0%,82%,100%{rotate:0deg}86%{rotate:-10deg}90%{rotate:10deg}94%{rotate:-6deg}}
+
+/* nav links: pixel underline slides in */
+.links a{position:relative}
+.links a::after{content:"";position:absolute;left:.7rem;right:.7rem;bottom:2px;height:3px;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .2s steps(4)}
+.links a:hover::after{transform:scaleX(1)}
+.links a[aria-current="page"]::after{display:none}
+
+/* polaroids straighten up and lift on hover */
+.polaroid{transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.hero .polaroid:hover,.about .polaroid:hover{transform:rotate(0deg) scale(1.03);box-shadow:6px 10px 0 rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.06)}
+.roll .flip{transition:scale .25s cubic-bezier(.2,.8,.2,1)}
+.roll .flip:hover{scale:1.06}
+
+/* sticky note sways gently */
+.currently{animation:sway 6s ease-in-out infinite}
+@keyframes sway{0%,100%{rotate:0deg}50%{rotate:1.2deg}}
+
+/* trophy bobs, sparkles */
+.win .trophy{animation:bob 1.6s steps(2) infinite}
+@keyframes bob{50%{translate:0 -5px}}
+.win:hover .trophy{animation:spin .6s steps(6)}
+@keyframes spin{to{rotate:360deg}}
+
+/* cards lift, emojis hop */
+.shelf-item,.explore a,.fact,.proj-card{transition:translate .2s,box-shadow .2s}
+.shelf-item:hover,.fact:hover,.proj-card:hover{translate:-3px -3px;box-shadow:0 -3px 0 0 var(--line),0 3px 0 0 var(--line),-3px 0 0 0 var(--line),3px 0 0 0 var(--line),6px 6px 0 0 var(--teal)}
+.shelf-item:hover .ico{animation:hop .5s steps(4)}
+@keyframes hop{40%{translate:0 -10px}70%{translate:0 0}85%{translate:0 -3px}}
+.ico{display:inline-block}
+
+/* chips pop */
+.chips li{transition:background .15s,color .15s,translate .15s}
+.chips li:hover{background:var(--teal);color:var(--on-teal);border-color:var(--teal);translate:0 -2px}
+
+/* buttons get a shine sweep */
+.btn-main{position:relative;overflow:hidden}
+.btn-main::before{content:"";position:absolute;top:0;bottom:0;left:-40%;width:30%;background:rgba(255,255,255,.35);transform:skewX(-20deg);transition:left .45s}
+.btn-main:hover::before{left:120%}
+
+/* experience: badge pops when revealed */
+.page .xp.rv .badge{scale:0;transition:scale .35s cubic-bezier(.3,1.6,.5,1) .3s}
+.page .xp.rv.in .badge{scale:1}
+
+/* click sparkles + confetti */
+.spark{position:fixed;width:6px;height:6px;pointer-events:none;z-index:60;animation:spark .6s steps(6) forwards}
+@keyframes spark{to{translate:var(--x) var(--y);opacity:0}}
+.confetti{position:fixed;width:8px;height:8px;pointer-events:none;z-index:60;animation:fall 1.4s cubic-bezier(.2,.6,.4,1) forwards}
+@keyframes fall{to{translate:var(--x) var(--y);rotate:var(--r);opacity:0}}
+
+/* track car leaves exhaust puffs */
+.puff{position:absolute;width:6px;height:6px;background:var(--silver);top:40px;pointer-events:none;animation:puff .9s steps(5) forwards}
+@keyframes puff{to{translate:-24px -10px;scale:2.2;opacity:0}}
+
+@media (prefers-reduced-motion: reduce){.rv{opacity:1;translate:none}}
