@@ -13,11 +13,10 @@ document.querySelectorAll('[data-art]').forEach(s=>draw(s,ART[s.dataset.art]));
 
 /* ---------- flip cards (swap in real photos later) ---------- */
 const SNAPS=[
- {img:'images/shellhacks.jpg',t:'shellhacks!',b:'SideQuest team',d:'Building SideQuest with my team at ShellHacks.'},
- {img:'images/cyberlaunch.jpg',t:'1st place!!',b:'CyberLaunch',d:'1st place in the Advanced division at USF.'},
- {img:'images/demo-day.jpg',t:'demo day',b:'America on Tech',d:'Pitching my animal-welfare site. 4th place!'},
- {img:'images/ucf.jpg',t:'go knights',b:'UCF',d:'Add a caption about life at UCF.'},
- {img:'images/race-day.jpg',t:'race day',b:'Lights out',d:'Add a photo from watching a race.'}
+ {img:'images/shellhacks.jpg',t:'shellhacks!',b:'ShellHacks 2026',d:'My SideQuest team and me at ShellHacks.'},
+ {img:'images/cyberlaunch.jpg',t:'1st place!!',b:'CyberLaunch 2025',d:'My team getting our prize for 1st place in the Advanced division.'},
+ {img:'images/demo-day.jpg',t:'demo day',b:'America on Tech',d:'My team at Demo Day. We placed 4th!'},
+ {img:'images/ucf.jpg',t:'fave walk',b:'UCF',d:'My favorite spot to walk by on campus, behind L3Harris.'}
 ];
 document.getElementById('flips').innerHTML=SNAPS.map(s=>`
  <button class="flip" aria-pressed="false" aria-label="${s.b}, flip for details">
