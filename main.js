@@ -45,7 +45,7 @@ function route(){
   let path=(location.hash.replace(/^#/,'')||'/'); if(!pages.some(p=>p.dataset.page===path)) path='/';
   pages.forEach(p=>p.classList.toggle('on',p.dataset.page===path));
   navLinks.forEach(a=>a.getAttribute('href')==='#'+path?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
-  const titles={'/':'Rachel Diaz | rvch.dev','/about':'About | Rachel Diaz','/experience':'Experience | Rachel Diaz','/projects':'Projects | Rachel Diaz','/shelf':'Shelf | Rachel Diaz'};
+  const titles={'/':'Rachel Diaz | rvchi.dev','/about':'About | Rachel Diaz','/experience':'Experience | Rachel Diaz','/projects':'Projects | Rachel Diaz','/shelf':'Shelf | Rachel Diaz'};
   document.title=titles[path];
   linksEl.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');
   if(!first){window.scrollTo(0,0);lapCar.classList.remove('go');void lapCar.offsetWidth;lapCar.classList.add('go');}

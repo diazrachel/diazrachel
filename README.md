@@ -2,7 +2,7 @@
 
 My personal portfolio. Plain HTML, CSS, and JavaScript, no build step.
 
-**Live:** https://rvch.dev
+**Live:** https://rvchi.dev
 
 ## Files
 
@@ -42,7 +42,7 @@ All colors live at the top of `css/style.css` under `:root` (light mode) and the
 
 ## Custom domain
 
-The `CNAME` file points GitHub Pages at **rvch.dev**. DNS records at the registrar:
+The `CNAME` file points GitHub Pages at **rvchi.dev**. DNS records at the registrar:
 
 | Type | Name | Value |
 |---|---|---|
