@@ -139,7 +139,13 @@ rb.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefa
       document.body.appendChild(d);setTimeout(()=>d.remove(),1500);
     }
   }
-  if(!calm)addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;burst(e.clientX-3,e.clientY-3,7,'spark',34);});
+  if(!calm){
+    /* mouse: sparkle on press. touch: sparkle only on a real tap, not while scrolling */
+    addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button===0)burst(e.clientX-3,e.clientY-3,7,'spark',34);});
+    let touchTap=false;
+    addEventListener('pointerdown',e=>{touchTap=e.pointerType!=='mouse';});
+    addEventListener('click',e=>{if(touchTap&&e.clientX)burst(e.clientX-3,e.clientY-3,7,'spark',34);touchTap=false;});
+  }
 
   /* confetti when you set a new best on lights out */
   const best=document.getElementById('bestT'),btn=document.getElementById('reactBtn');

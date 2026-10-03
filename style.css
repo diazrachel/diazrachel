@@ -348,3 +348,60 @@ footer{border-top:2px solid var(--surface2);padding:2rem 0 2.5rem;color:var(--mu
 .roll .flip:nth-child(1){width:250px}
 .roll .flip:nth-child(3){width:215px}
 @media (max-width:820px){.roll .flip,.roll .flip:nth-child(n){width:44%}}
+
+/* =========================================================
+   PHONE POLISH
+   ========================================================= */
+html,body{overflow-x:clip}
+.nav{overflow-x:clip}
+.only-sm{display:none}
+
+@media (max-width:820px){
+  .page{padding:2rem 0 3rem}
+  .block{margin-top:3.5rem}
+
+  /* menu: bigger tap targets + social links live here on phones */
+  .links a{padding:.75rem .7rem;font-size:1.05rem}
+  .links .only-sm{display:block}
+  .links .only-sm:first-of-type{border-top:2px solid var(--surface2);margin-top:.4rem;padding-top:.4rem}
+
+  /* home: photo first, then the intro */
+  .hero{gap:1.6rem}
+  .hero .polaroid{order:-1;justify-self:center;max-width:250px;margin-top:.6rem!important}
+  .intro p{font-size:1.06rem}
+  .currently{max-width:none}
+
+  /* camera roll keeps its scrapbook tilt */
+  .roll{gap:1.4rem .9rem}
+  .roll .flip:nth-child(odd){transform:rotate(-2.5deg)}
+  .roll .flip:nth-child(even){transform:rotate(2deg) translateY(12px)}
+
+  .win{gap:1rem}
+  .win .trophy{width:72px}
+
+  /* about: centered photo, 2x2 facts */
+  .about{gap:2rem}
+  .about .polaroid{justify-self:center;max-width:280px!important;width:100%}
+  .facts{grid-template-columns:1fr 1fr;gap:.8rem}
+  .fact{padding:.7rem .8rem}
+
+  /* experience: date + place on one line */
+  .xp{padding:1.3rem 0}
+  .xp-when .where{display:inline}
+  .xp-when .where::before{content:", "}
+  .xp-group{margin-bottom:2.5rem}
+
+  /* projects */
+  .proj-shot{min-height:210px}
+  .proj-info{padding:1.3rem}
+  .proj-card{max-width:none!important}
+
+  /* shelf: emoji beside the title, tighter cards */
+  .shelf{gap:1rem}
+  .shelf-item{display:grid;grid-template-columns:auto 1fr;column-gap:.9rem;padding:1rem 1.1rem;align-items:start}
+  .shelf-item .ico{grid-row:1 / span 2;font-size:1.7rem;margin:0}
+  .shelf-item h3{font-size:1.15rem;margin-bottom:.2rem}
+
+  .game{padding:1.3rem;gap:1.2rem;margin-top:2rem}
+  .light{width:36px}
+}
