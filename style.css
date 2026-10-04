@@ -432,3 +432,22 @@ html,body{overflow-x:clip}
   .roll .polaroid{padding:8px 8px 0}
   .roll .pcap{font-size:1.15rem;padding:.35rem 0 .5rem}
 }
+
+/* camera roll on phones: smaller cards, more space */
+@media (max-width:820px){
+  .roll{grid-template-columns:repeat(2,minmax(0,148px));justify-content:center;gap:2.6rem 2.2rem;padding:.6rem 0 1.4rem}
+  .roll .flip,.roll .flip:nth-child(n){max-width:100%}
+  .roll .flip:nth-child(even){transform:rotate(1.5deg) translateY(10px)}
+  .roll .pcap{font-size:1.05rem}
+}
+
+/* the back of each card never makes the card bigger than its photo side */
+.roll{align-items:start}
+.roll .side.back{position:absolute;inset:0;overflow:hidden}
+.roll .side.front .photo{flex:none;aspect-ratio:1}
+@media (max-width:820px){
+  .roll .side.back{padding:.7rem}
+  .roll .back b{font-size:1.2rem}
+  .roll .back p{font-size:.85rem;line-height:1.35}
+  .roll .back small{font-size:.9rem}
+}
